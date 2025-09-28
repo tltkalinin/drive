@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}Регистрация - DRIVE{% endblock %}
+
+{% block body %}
+<section class="auth-section auth-section-register">
+    <div class="auth-container">
+        <h2 class="auth-title">Регистрация</h2>
+
+        <form method="POST" action="{{ url_for('register_user') }}">
+            <div class="mb-3">
+                <label for="username" class="auth-label">Логин</label>
+                <input type="text" class="auth-input" id="username" name="username" placeholder="Введите логин (электронную почту)" required>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="auth-label">Пароль</label>
+                <input type="password" class="auth-input" id="password" name="password" placeholder="Введите пароль" required>
+            </div>
+            <div class="mb-3">
+                <label for="confirm_password" class="auth-label">Подтверждение пароля</label>
+                <input type="password" class="auth-input" id="confirm_password" name="confirm_password" placeholder="Повторите пароль" required>
+            </div>
+            <button type="submit" class="btn my-button auth-btn">Зарегистрироваться</button>
+        </form>
+
+        <p class="auth-register">
+            <br>Уже есть аккаунт? 
+            <a href="{{ url_for('auth') }}">Войти</a>
+        </p>
+    </div>
+</section>
+{% endblock %}

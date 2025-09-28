@@ -12,6 +12,14 @@ def index():
 def account():
     return render_template("account.html")
 
+@app.route("/admin")
+def admin():
+    return render_template("admin.html")
+
+@app.route("/auth")
+def auth():
+    return render_template("auth.html")
+
 @app.route("/payment")
 def payment():
     return render_template("payment.html")
@@ -19,6 +27,20 @@ def payment():
 @app.route("/receipt")
 def receipt():
     return render_template("receipt.html")
+
+@app.route("/register")
+def register():
+    return render_template("register.html")
+
+@app.route("/register_user", methods=["POST"])
+def register_user():
+    # Здесь обработка регистрации: сохранение пользователя
+    username = request.form.get("username")
+    password = request.form.get("password")
+    confirm_password = request.form.get("confirm_password")
+    # Можно добавить проверку совпадения паролей и сохранение в БД
+    print(username, password, confirm_password)
+    return redirect(url_for("auth"))
 
 @app.route("/booking", methods=["GET", "POST"])
 def booking():

@@ -41,7 +41,7 @@ p {
     background: linear-gradient(90deg, #00d9ff, #b300ff);
     border: none;
     color: #fff;
-    font-weight: ;
+    font-weight: 700;
     border-radius: 30px;
     width: 265.81px;
     height: 85.65px;
@@ -262,7 +262,7 @@ section h2 {
 /* ====== Анимации ====== */
 @keyframes neonGlow {
     0% { text-shadow: 0 0 4px #6a5acd, 0 0 8px #9a7dff, 0 0 12px #6a5acd; }
-    50% { text-shadow: 0 0 8px #9a7ff, 0 0 16px #6a5acd, 0 0 24px #9a7dff; }
+    50% { text-shadow: 0 0 8px #9a7dff, 0 0 16px #6a5acd, 0 0 24px #9a7dff; }
     100% { text-shadow: 0 0 4px #6a5acd, 0 0 8px #9a7dff, 0 0 12px #6a5acd; }
 }
 
@@ -309,4 +309,83 @@ form button:hover {
 .about-text {
     font-size: 30px;
     text-align: center;
+}
+
+/* ====== Страница авторизации и регистрации ====== */
+.auth-container {
+    background-color: #141414;
+    max-width: 400px;
+    width: 100%;
+    padding: 1.5rem;
+    border-radius: 12px;
+}
+
+.auth-title {
+    font-size: 2rem;
+    color: #fff;
+    text-align: center;
+    margin-bottom: 1rem;
+    text-shadow: 0 0 10px #b300ff, 0 0 20px #00d9ff;
+}
+
+.auth-label {
+    font-size: 25px;
+    color: #ddd;
+}
+
+.auth-input {
+    background: #0a0a0f;
+    border: 1px solid #333;
+    color: #fff;
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 1rem;
+    font-size: 18px;
+    font-family: 'Jost', sans-serif;
+}
+
+.auth-btn {
+    font-size: 1rem !important;
+    width: 50% !important;
+    height: 40px !important;
+    margin: 0 auto;
+}
+
+.auth-register {
+    font-size: 25px;
+    color: #bbb;
+    text-align: center;
+    margin-top: 15px;
+}
+
+.auth-register a {
+    color: #00d9ff;
+    text-decoration: none;
+    text-shadow: 0 0 8px #00d9ff, 0 0 16px #b300ff;
+}
+
+/* ====== Центрирование для форм входа и регистрации ====== */
+.auth-section {
+    display: flex;
+    justify-content: center;
+}
+
+/* Вход – центрирование по ширине и высоте */
+.auth-section-login {
+    align-items: flex-start;
+    padding-top: 80px;
+}
+
+/* Регистрация – центрирование только по ширине, форма выше */
+.auth-section-register {
+    align-items: flex-start;
+    padding-top: 80px;
+}
+
+.auth-btn {
+    font-size: 25px !important;
+    width: 100% !important;
+    height: 40px !important;
+    margin: 0 auto;
 }
