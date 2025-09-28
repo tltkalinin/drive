@@ -70,22 +70,16 @@
 <section id="pricesSection" class="py-5 bg-dark text-light">
     <h2 class="text-center mb-4">Прайс-лист</h2>
     <div class="d-flex flex-wrap justify-content-center gap-4">
+        {% for price in prices %}
         <div class="card price-card">
-            <h5>PC - Общий зал</h5>
-            <p>1 час: 500 ₽<br>12 часов: 5500 ₽<br>Ночь: 4800 ₽</p>
+            <h5>{{ price['service'] }}</h5>
+            <p>
+                1 час: {{ price['price_1h'] }} ₽<br>
+                12 часов: {{ price['price_12h'] }} ₽<br>
+                Ночь: {{ price['price_night'] }} ₽
+            </p>
         </div>
-        <div class="card price-card">
-            <h5>PS - Общий зал</h5>
-            <p>1 час: 400 ₽<br>12 часов: 4200 ₽<br>Ночь: 3800 ₽</p>
-        </div>
-        <div class="card price-card">
-            <h5>X-box - Общий зал</h5>
-            <p>1 час: 450 ₽<br>12 часов: 4700 ₽<br>Ночь: 4200 ₽</p>
-        </div>
-        <div class="card price-card">
-            <h5>VR-станция</h5>
-            <p>1 час: 900 ₽<br>12 часов: 9200 ₽<br>Ночь: 8800 ₽</p>
-        </div>
+        {% endfor %}
     </div>
 </section>
 

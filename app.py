@@ -1,12 +1,30 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, g
+import sqlite3
 from datetime import datetime, timedelta
 
 app = Flask(__name__)
+DATABASE = 'database.db'
 
+# --- Работа с базой данных ---
+def get_db():
+    if 'db' not in g:
+        g.db = sqlite3.connect(DATABASE)
+        g.db.row_factory = sqlite3.Row  # чтобы возвращались словари
+    return g.db
+
+@app.teardown_appcontext
+def close_db(error):
+    db = g.pop('db', None)
+    if db is not None:
+        db.close()
+
+# --- Маршруты ---
 @app.route("/")
 @app.route("/index")
 def index():
-    return render_template("index.html")
+    db = get_db()
+    prices = db.execute("SELECT service, price_1h, price_12h, price_night FROM prices").fetchall()
+    return render_template("index.html", prices=prices)
 
 @app.route("/account")
 def account():
@@ -34,11 +52,10 @@ def register():
 
 @app.route("/register_user", methods=["POST"])
 def register_user():
-    # Здесь обработка регистрации: сохранение пользователя
     username = request.form.get("username")
     password = request.form.get("password")
     confirm_password = request.form.get("confirm_password")
-    # Можно добавить проверку совпадения паролей и сохранение в БД
+    # Здесь можно добавить проверку совпадения паролей и сохранение в БД
     print(username, password, confirm_password)
     return redirect(url_for("auth"))
 
