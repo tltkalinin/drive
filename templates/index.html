@@ -4,58 +4,41 @@
 
 {% block body %}
 
-<!-- Hero Section -->
-<section class="hero-section text-center py-5">
-    <div class="hero-content">
-        <h1 class="hero-title neon-text-large mb-4">Компьютерный клуб DRIVE</h1>
-        <p class="hero-description mb-4 mx-auto" style="max-width:700px;">
-            Наш компьютерный клуб — это мощный геймплей,
-            новые видеоигры и VR. Здесь каждая столица киберспорта,
-            где геймеры находят единомышленников и оттачивают свои навыки.
-            Почувствуй разницу в игре!
-        </p>
-        <a href="{{ url_for('booking') }}" class="btn my-button px-5 py-2">Забронировать</a>
-    </div>
-</section>
-
-<!-- Features Section -->
-<section class="features-section py-5">
-    <div class="d-flex justify-content-center flex-wrap gap-3">
-
-        <div class="neon-card text-center p-3">
-            <i class="fas fa-clock fa-2x mb-2"></i>
-            <h6>Работаем 24/7</h6>
+<!-- Hero Section + Features на одном экране -->
+<section class="hero-section text-center">
+    <div class="hero-content d-flex flex-column align-items-center justify-content-between" style="height: 100%;">
+        <div>
+            <h1 class="hero-title neon-text-large mb-3">Компьютерный клуб DRIVE</h1>
+            <p class="hero-description mb-5">
+                ТВОЙ КЛУБ - ТВОЙ DRIVE<br>
+                ЭНЕРГИЯ, КОТОРАЯ ЗАРЯЖАЕТ<br>
+                КОМПЬЮТЕРНЫЙ КЛУБ В ЦЕНТРЕ СПБ
+            </p>
         </div>
 
-        <div class="neon-card text-center p-3">
-            <i class="fas fa-gamepad fa-2x mb-2"></i>
-            <h6>Отдельные комнаты с приставками</h6>
-        </div>
+        <!-- Блок карточек Features с кнопкой Забронировать -->
+        <div class="d-flex justify-content-center flex-wrap gap-3 hero-features">
+            <div class="neon-card text-center p-3">
+                <i class="fas fa-clock fa-2x mb-2"></i>
+                <h6 class="feature-title">Самое мощное оборудование</h6>
+            </div>
 
-        <div class="neon-card text-center p-3">
-            <i class="fas fa-desktop fa-2x mb-2"></i>
-            <h6>Мощное игровое оборудование</h6>
-        </div>
+            <div class="neon-card text-center p-3">
+                <i class="fas fa-gamepad fa-2x mb-2"></i>
+                <h6 class="feature-title">Работаем 24/7</h6>
+            </div>
 
-        <a href="#gamesSection"
-            class="neon-card d-flex flex-column justify-content-center align-items-center p-3 text-center text-decoration-none">
-            <i class="fas fa-list fa-2x mb-2"></i>
-            <span>Список игр</span>
-        </a>
+            <a href="{{ url_for('booking') }}" class="btn my-button px-5 py-2 align-self-center">Забронировать</a>
 
-        <div class="neon-card text-center p-3">
-            <i class="fas fa-vr-cardboard fa-2x mb-2"></i>
-            <h6>VR-зал</h6>
-        </div>
+            <div class="neon-card text-center p-3">
+                <i class="fas fa-vr-cardboard fa-2x mb-2"></i>
+                <h6 class="feature-title">Бесплатный WiFi</h6>
+            </div>
 
-        <div class="neon-card text-center p-3">
-            <i class="fas fa-car fa-2x mb-2"></i>
-            <h6>Удобная парковка</h6>
-        </div>
-
-        <div class="neon-card text-center p-3">
-            <i class="fas fa-wifi fa-2x mb-2"></i>
-            <h6>Бесплатный WiFi</h6>
+            <div class="neon-card text-center p-3">
+                <i class="fas fa-wifi fa-2x mb-2"></i>
+                <h6 class="feature-title">Игровые ПК, PS,<br>X-Box, VR</h6>
+            </div>
         </div>
     </div>
 </section>
@@ -64,42 +47,42 @@
 <section id="zonesSection" class="py-5">
     <h2 class="text-center mb-4">Игровые зоны</h2>
     <div class="d-flex flex-wrap justify-content-center gap-4">
-        <div class="card p-3 text-center" style="width: 200px;">
+        <div class="card zone-card">
             <h5>PC</h5>
             <p>Общий зал и отдельные комнаты для ПК</p>
         </div>
-        <div class="card p-3 text-center" style="width: 200px;">
+        <div class="card zone-card">
             <h5>PlayStation</h5>
             <p>Комнаты с приставками PS5</p>
         </div>
-        <div class="card p-3 text-center" style="width: 200px;">
+        <div class="card zone-card">
             <h5>X-box</h5>
             <p>Отдельные комнаты и общий зал</p>
         </div>
-        <div class="card p-3 text-center" style="width: 200px;">
+        <div class="card zone-card">
             <h5>VR</h5>
             <p>VR-станции с современным оборудованием</p>
         </div>
     </div>
 </section>
 
-<!-- Тарифы и цены -->
+<!-- Прайс-лист -->
 <section id="pricesSection" class="py-5 bg-dark text-light">
-    <h2 class="text-center mb-4">Тарифы и цены</h2>
+    <h2 class="text-center mb-4">Прайс-лист</h2>
     <div class="d-flex flex-wrap justify-content-center gap-4">
-        <div class="card p-3 text-center bg-secondary text-light" style="width: 200px;">
+        <div class="card price-card">
             <h5>PC - Общий зал</h5>
             <p>1 час: 500 ₽<br>12 часов: 5500 ₽<br>Ночь: 4800 ₽</p>
         </div>
-        <div class="card p-3 text-center bg-secondary text-light" style="width: 200px;">
+        <div class="card price-card">
             <h5>PS - Общий зал</h5>
             <p>1 час: 400 ₽<br>12 часов: 4200 ₽<br>Ночь: 3800 ₽</p>
         </div>
-        <div class="card p-3 text-center bg-secondary text-light" style="width: 200px;">
+        <div class="card price-card">
             <h5>X-box - Общий зал</h5>
             <p>1 час: 450 ₽<br>12 часов: 4700 ₽<br>Ночь: 4200 ₽</p>
         </div>
-        <div class="card p-3 text-center bg-secondary text-light" style="width: 200px;">
+        <div class="card price-card">
             <h5>VR-станция</h5>
             <p>1 час: 900 ₽<br>12 часов: 9200 ₽<br>Ночь: 8800 ₽</p>
         </div>
@@ -110,11 +93,11 @@
 <section id="promoSection" class="py-5">
     <h2 class="text-center mb-4">Акции</h2>
     <div class="d-flex flex-wrap justify-content-center gap-4">
-        <div class="card p-3 text-center" style="width: 250px;">
+        <div class="card promo-card">
             <h5>Счастливые часы</h5>
             <p>Скидка 20% с 10:00 до 14:00</p>
         </div>
-        <div class="card p-3 text-center" style="width: 250px;">
+        <div class="card promo-card">
             <h5>Акция для команд</h5>
             <p>При бронировании от 5 человек – скидка 15%</p>
         </div>
@@ -124,8 +107,8 @@
 <!-- О нас -->
 <section id="aboutSection" class="py-5 bg-dark text-light">
     <h2 class="text-center mb-4">О нас</h2>
-    <p class="text-center mx-auto" style="max-width:700px;">
-        DRIVE — это современный компьютерный клуб с мощным оборудованием, удобными комнатами и VR-зонами.
+    <p class="about-text">
+        DRIVE — это современный компьютерный клуб с мощным оборудованием, удобными комнатами и VR-зонами.<br>
         Мы работаем 24/7, предоставляем комфортное пространство для геймеров любого уровня и организуем турниры.
     </p>
 </section>
@@ -134,12 +117,12 @@
 <section id="gamesSection" class="py-5">
     <h2 class="text-center mb-4">Список игр</h2>
     <div class="d-flex flex-wrap justify-content-center gap-3">
-        <div class="card p-3 text-center" style="width: 180px;">CS:GO</div>
-        <div class="card p-3 text-center" style="width: 180px;">Dota 2</div>
-        <div class="card p-3 text-center" style="width: 180px;">FIFA 23</div>
-        <div class="card p-3 text-center" style="width: 180px;">Fortnite</div>
-        <div class="card p-3 text-center" style="width: 180px;">Beat Saber VR</div>
-        <div class="card p-3 text-center" style="width: 180px;">Half-Life: Alyx VR</div>
+        <div class="card game-card">TES V: Skyrim</div>
+        <div class="card game-card">RDR 2</div>
+        <div class="card game-card">Witcher 3</div>
+        <div class="card game-card">Stalker 2</div>
+        <div class="card game-card">CS:GO</div>
+        <div class="card game-card">Half-Life: Alyx VR</div>
     </div>
 </section>
 

@@ -1,167 +1,312 @@
-/* Базовые настройки */
-html,
+/* ====== Локальные шрифты ====== */
+@font-face {
+    font-family: 'Buyan';
+    src: url('../fonts/BuyanRegular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Jost';
+    src: url('../fonts/Jost.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* ====== Общие стили ====== */
 body {
-    width: 100%;
-    height: 100%;
+    font-family: 'Buyan', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #0a0a0f;
+    color: #ddd;
     margin: 0;
     padding: 0;
-    background-color: #0a0a0a;
-    color: #f5f5f5;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    scroll-behavior: smooth;
 }
 
-/* Логотип */
+h1, h2, h3, h4, h5, h6, p, .card, .zone-card, .price-card, .promo-card, .game-card, .booking-form {
+    font-family: 'Buyan', sans-serif;
+}
+
+p {
+    color: #bbb;
+}
+
+/* ====== Логотип ====== */
 .logo {
-    height: 119px;
-    width: 307px;
+    height: 90px;
 }
 
-/* Карточка бронирования */
-.card {
-    background: linear-gradient(145deg, #1b1b1b, #2c2c2c);
-    border: none;
-    border-radius: 1rem;
-    padding: 2rem;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
-
-    /* Растягивается, ограничений по ширине нет */
-    width: 100%;
-    max-width: 100%;
-}
-
-/* Заголовок формы */
-.card h2 {
-    font-weight: 700;
-    letter-spacing: 1px;
-    color: rgba(0, 120, 255, 0.8);
-}
-
-/* Поля ввода и селекты */
-.form-control,
-.form-select {
-    background-color: #1a1a1a;
-    color: #f5f5f5;
-    border: 1px solid rgba(0, 68, 255, 0.8);
-    border-radius: 0.5rem;
-    transition: all 0.3s ease;
-    width: 100%;
-
-}
-
-.form-control::placeholder {
-    color: #1224c9;
-    opacity: 1;
-}
-
-.form-control:focus,
-.form-select:focus {
-    background-color: #2a2a2a;
-    border-color: #fc00ef;
-    box-shadow: 0 0 10px rgba(255, 0, 157, 0.5);
-    color: #fff;
-}
-
-/* Текстarea */
-textarea.form-control {
-    resize: none;
-}
-
-/* Кнопки */
-.btn-primary {
-    background-color: #000000;
-    border: none;
-    font-weight: 600;
-    transition: 0.3s;
-}
-
-.btn-primary:hover {
-    background-color: #00bcd4;
-}
-
-.btn-success {
-    background-color: #28a745;
-    border: none;
-}
-
-.btn-outline-light {
-    border-radius: 0.5rem;
-    border: 1px solid #00d8ff;
-    color: #00d8ff;
-    transition: 0.3s;
-}
-
-.btn-outline-light:hover,
-.btn-outline-light.active {
-    background-color: #00d8ff;
-    color: #0a0a0a;
-}
-
-/* Сумма заказа */
-#orderTotal {
-    background-color: #111;
-    border-radius: 0.5rem;
-    font-weight: 600;
-    text-align: center;
-}
-
-/* Модальное окно */
-.modal-content {
-    background: linear-gradient(145deg, #1b1b1b, #2c2c2c);
-    border-radius: 1rem;
-    color: #f5f5f5;
-}
-
-/* Кнопки выбора мест */
-#placeGrid .btn {
-    min-width: 45px;
-    min-height: 45px;
-    font-weight: 600;
-    width: auto;
-}
-
-#placeGrid .btn.active {
-    background-color: #00d8ff;
-    color: #0a0a0a;
-}
-
-/* Подсветка ошибок */
-.is-invalid {
-    border-color: #dc3545 !important;
-    box-shadow: 0 0 5px #dc3545;
-}
-
-.booking-btn {
-    transform: translateY(0) scale(1);
-    box-shadow: 0 0 20px rgba(0, 245, 255, 0.3);
-}
-
+/* ====== Кнопки ====== */
 .my-button {
-    /* Общий вид */
-    padding: 12px 24px;
+    background: linear-gradient(90deg, #00d9ff, #b300ff);
     border: none;
-    border-radius: 999px;
-    /* Полностью скруглённая */
-    font-family: "Segoe UI", Roboto, Arial, sans-serif;
-    font-size: 16px;
-    font-weight: 500;
-    color: white;
-    cursor: pointer;
-
-    /* Фон: слева чёрный, справа плавный градиент к серому */
-    background: linear-gradient(to right,
-            black 75%,
-            #444 100%);
-
-    /* Синее свечение */
-    box-shadow: 0 0 15px rgba(0, 120, 255, 0.8),
-        0 0 40px rgba(0, 120, 255, 0.3);
-
-    /* Плавные переходы при наведении */
-    transition: transform 0.2s ease, box-shadow 0.3s ease;
+    color: #fff;
+    font-weight: ;
+    border-radius: 30px;
+    width: 265.81px;
+    height: 85.65px;
+    font-size: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 12px #00d9ff, 0 0 24px #b300ff;
+    transition: 0.3s, transform 0.3s, box-shadow 0.3s;
+    font-family: 'Jost', sans-serif;
 }
 
 .my-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 0 20px rgba(0, 150, 255, 0.9),
-        0 0 50px rgba(0, 150, 255, 0.4);
+    transform: scale(1.1);
+    box-shadow: 0 0 20px #00d9ff, 0 0 40px #b300ff;
+}
+
+.login-btn {
+    font-family: 'Jost', sans-serif;
+    font-weight: normal;
+    font-size: 23.99px;
+    background: linear-gradient(90deg, #00d9ff, #b300ff);
+    color: #fff;
+    border: none;
+    border-radius: 30px;
+    padding: 10px 25px;
+    box-shadow: 0 0 12px #00d9ff, 0 0 24px #b300ff;
+    transition: 0.3s, transform 0.3s, box-shadow 0.3s;
+}
+
+.login-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 20px #00d9ff, 0 0 40px #b300ff;
+}
+
+/* ====== Hero Section ====== */
+.hero-section {
+    background: linear-gradient(to right, #0a0a0f, #1a0033);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    text-align: center;
+    min-height: 910px;
+    padding: 60px 20px 40px 20px;
+    box-sizing: border-box;
+}
+
+.hero-title {
+    font-size: 2.5rem;
+    color: #fff;
+    text-shadow: 0 0 20px #b300ff, 0 0 40px #00d9ff;
+    margin-bottom: 10px;
+}
+
+.hero-description {
+    font-size: 2.2rem;
+    opacity: 0.9;
+    max-width: 700px;
+    margin: 0 auto 50px auto;
+    text-shadow: 0 0 8px rgba(0,217,255,0.5);
+}
+
+.hero-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 360px;
+}
+
+.hero-features {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.hero-features .neon-card {
+    width: 180px;
+    font-family: 'Jost', sans-serif;
+}
+
+/* ====== Карточки и блоки ====== */
+.card,
+.zone-card,
+.price-card,
+.promo-card,
+.game-card {
+    background-color: #141414;
+    border: 1px solid #222;
+    color: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    transition: 0.3s;
+    box-shadow: 0 0 5px rgba(0, 217, 255, 0.3);
+    font-family: 'Buyan', sans-serif;
+    font-size: 30px;
+}
+
+.card:hover,
+.zone-card:hover,
+.price-card:hover,
+.promo-card:hover,
+.game-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 15px #00d9ff, 0 0 25px #b300ff;
+}
+
+/* ====== Навигация ====== */
+.nav-link {
+    display: inline-block;
+    color: #00d9ff;
+    font-weight: 900;
+    font-size: 1.5rem;
+    margin: 0 15px;
+    text-decoration: none;
+    text-shadow: 0 0 8px #00d9ff, 0 0 16px #b300ff;
+    transition: 0.3s, text-shadow 0.3s, transform 0.3s;
+    cursor: pointer;
+    font-family: 'Jost', sans-serif;
+}
+
+.nav-link:hover {
+    text-shadow: 0 0 16px #00d9ff, 0 0 32px #b300ff;
+    transform: scale(1.05);
+}
+
+/* ====== Секции ====== */
+section {
+    min-height: 910px;
+    padding: 60px 20px;
+    background-color: #0a0a0f;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+section:nth-child(even) {
+    background-color: #141414;
+}
+
+section h2 {
+    margin-bottom: 30px;
+    text-align: center;
+    font-size: 2rem;
+    text-shadow: 0 0 10px #b300ff, 0 0 20px #00d9ff;
+}
+
+/* ====== Игровые зоны / цены / акции / игры ====== */
+.zone-card, 
+.price-card, 
+.promo-card, 
+.game-card {
+    width: 250px;
+    text-align: center;
+    height: 420px;
+    font-family: 'Buyan', sans-serif;
+}
+
+/* ====== Форма бронирования ====== */
+.booking-form {
+    background: #141414;
+    border: 2px solid #00d9ff;
+    padding: 30px;
+    border-radius: 12px;
+    max-width: 500px;
+    margin: 0 auto;
+    box-shadow: 0 0 15px rgba(0,217,255,0.5), 0 0 25px rgba(179,0,255,0.5);
+    font-family: 'Buyan', sans-serif;
+}
+
+.booking-form label {
+    color: #ddd;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.booking-form input,
+.booking-form select,
+.booking-form textarea {
+    background: #0a0a0f;
+    border: 1px solid #333;
+    color: #fff;
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    transition: 0.3s;
+    font-family: 'Buyan', sans-serif;
+}
+
+.booking-form input:focus,
+.booking-form select:focus,
+.booking-form textarea:focus {
+    outline: none;
+    border-color: #00d9ff;
+    box-shadow: 0 0 10px #00d9ff, 0 0 15px #b300ff;
+}
+
+/* ====== Адаптив ====== */
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2rem;
+    }
+
+    .hero-description {
+        font-size: 1rem;
+    }
+
+    .zone-card,
+    .price-card,
+    .promo-card,
+    .game-card {
+        width: 100%;
+    }
+}
+
+/* ====== Анимации ====== */
+@keyframes neonGlow {
+    0% { text-shadow: 0 0 4px #6a5acd, 0 0 8px #9a7dff, 0 0 12px #6a5acd; }
+    50% { text-shadow: 0 0 8px #9a7ff, 0 0 16px #6a5acd, 0 0 24px #9a7dff; }
+    100% { text-shadow: 0 0 4px #6a5acd, 0 0 8px #9a7dff, 0 0 12px #6a5acd; }
+}
+
+@keyframes buttonPulse {
+    0% { box-shadow: 0 0 6px #6a5acd, 0 0 12px #9a7dff; }
+    50% { box-shadow: 0 0 12px #9a7dff, 0 0 24px #6a5acd; }
+    100% { box-shadow: 0 0 6px #6a5acd, 0 0 12px #9a7dff; }
+}
+
+.hero-title,
+section h2 {
+    animation: neonGlow 3s infinite ease-in-out;
+}
+
+.my-button,
+.login-btn,
+form button {
+    transition: 0.3s;
+}
+
+.my-button:hover,
+.login-btn:hover,
+form button:hover {
+    animation: buttonPulse 2s infinite ease-in-out;
+}
+
+/* ====== Заголовки карточек ====== */
+.card h5,
+.zone-card h5,
+.price-card h5,
+.promo-card h5,
+.game-card h5 {
+    font-size: 35px; /* размер текста заголовков карточек */
+    text-align: center;
+}
+
+/* ====== Текст под иконками / фичи ====== */
+.feature-title {
+    font-size: 25px;
+    text-align: center;
+}
+
+/* ====== Текст в разделе "О нас" ====== */
+.about-text {
+    font-size: 30px;
+    text-align: center;
 }
