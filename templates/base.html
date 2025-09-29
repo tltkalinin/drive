@@ -10,24 +10,30 @@
     <title>{% block title %}{% endblock %}</title>
 </head>
 
-<body>
+<body class="{% if is_account_page %}account-page-bg{% endif %}">
     <div class="container-fluid">
-        <header
-            class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+        <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom
+        {% if is_account_page %} account-header-bg{% endif %}">
             <div class="col-md-3 mb-2 mb-md-0">
                 <a href="/" class="d-inline-flex link-body-emphasis text-decoration-none">
                     <img class="logo" src="{{ url_for('static', filename='images/drive.png') }}" alt="Drive logo">
                 </a>
             </div>
             <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+                {% if not is_account_page %}
                 <li><a href="#zonesSection" class="nav-link px-2">Игровые зоны</a></li>
                 <li><a href="#pricesSection" class="nav-link px-2">Прайс-лист</a></li>
                 <li><a href="#promoSection" class="nav-link px-2">Акции</a></li>
                 <li><a href="#aboutSection" class="nav-link px-2">О нас</a></li>
                 <li><a href="#gamesSection" class="nav-link px-2">Список игр</a></li>
+                {% endif %}
             </ul>
             <div class="col-md-3 text-end">
+                {% if not is_account_page %}
                 <button id="loginButton" type="button" class="btn login-btn">Войти</button>
+                {% else %}
+                <a href="{{ url_for('logout') }}" class="btn btn-danger">Выйти</a>
+                {% endif %}
             </div>
         </header>
 

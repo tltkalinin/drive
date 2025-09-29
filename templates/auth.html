@@ -1,18 +1,27 @@
 {% extends 'base.html' %}
 
-{% block title %}
-Drive
-{% endblock %}
+{% block title %}Вход - DRIVE{% endblock %}
 
 {% block body %}
-<section class="auth-section auth-section-login">
+<section class="auth-section auth-section-login py-5">
     <div class="auth-container">
-        <h2 class="auth-title">Вход</h2>
-        
-        <form method="POST" action="{{ url_for('auth') }}">
+
+        <h2 class="auth-title mb-4">Вход</h2>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
             <div class="mb-3">
-                <label for="username" class="auth-label">Логин</label>
-                <input type="text" class="auth-input" id="username" name="username" placeholder="Введите логин (электронную почту)" required>
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}" role="alert">{{ message }}</div>
+            {% endfor %}
+            </div>
+        {% endif %}
+        {% endwith %}
+
+        <form id="loginForm" method="POST" action="{{ url_for('auth') }}">
+            <div class="mb-3">
+                <label for="username" class="auth-label">Логин (почта)</label>
+                <input type="text" class="auth-input" id="username" name="username" placeholder="Введите логин" required>
             </div>
             <div class="mb-3">
                 <label for="password" class="auth-label">Пароль</label>
@@ -21,10 +30,11 @@ Drive
             <button type="submit" class="btn my-button auth-btn">Войти</button>
         </form>
 
-        <p class="auth-register">
-            <br>Ещё нет аккаунта? 
-            <a href="{{ url_for('register') }}">Зарегистрироваться</a>
+        <p class="auth-register mt-3">
+            Нет аккаунта? <a href="{{ url_for('register') }}">Зарегистрироваться</a>
         </p>
     </div>
 </section>
+
+<script src="{{ url_for('static', filename='js/auth.js') }}"></script>
 {% endblock %}

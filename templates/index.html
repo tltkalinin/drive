@@ -99,12 +99,18 @@
 </section>
 
 <!-- О нас -->
-<section id="aboutSection" class="py-5 bg-dark text-light">
+<section id="aboutSection" class="py-5 bg-dark text-light d-flex flex-column align-items-center">
     <h2 class="text-center mb-4">О нас</h2>
-    <p class="about-text">
+
+    <p class="about-text text-center mb-4">
         DRIVE — это современный компьютерный клуб с мощным оборудованием, удобными комнатами и VR-зонами.<br>
         Мы работаем 24/7, предоставляем комфортное пространство для геймеров любого уровня и организуем турниры.
     </p>
+
+    <!-- Картинка под текстом -->
+    <img src="{{ url_for('static', filename='images/img.jpg') }}" 
+         alt="О нас" 
+         style="width: 60%; height: auto; display: block;">
 </section>
 
 <!-- Список игр -->
@@ -119,5 +125,38 @@
         <div class="card game-card">Half-Life: Alyx VR</div>
     </div>
 </section>
+
+<!-- Кнопка "Вверх" -->
+<button id="scrollTopBtn" class="my-button" style="
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    display: none;
+    width: 60px;
+    height: 60px;
+    padding: 0;
+    font-size: 24px;
+">↑</button>
+
+<script>
+// Кнопка "Вверх"
+const scrollTopBtn = document.getElementById('scrollTopBtn');
+
+// Показываем кнопку, когда пользователь прокрутил вниз
+window.addEventListener('scroll', () => {
+    if (window.scrollY > 100) {
+        scrollTopBtn.style.display = 'flex';
+        scrollTopBtn.style.alignItems = 'center';
+        scrollTopBtn.style.justifyContent = 'center';
+    } else {
+        scrollTopBtn.style.display = 'none';
+    }
+});
+
+// При клике прокручиваем страницу вверх плавно
+scrollTopBtn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+</script>
 
 {% endblock %}

@@ -241,6 +241,12 @@ section h2 {
     box-shadow: 0 0 10px #00d9ff, 0 0 15px #b300ff;
 }
 
+/* Показываем белый значок календаря */
+input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+    cursor: pointer;
+}
+
 /* ====== Адаптив ====== */
 @media (max-width: 768px) {
     .hero-title {
@@ -388,4 +394,21 @@ form button:hover {
     width: 100% !important;
     height: 40px !important;
     margin: 0 auto;
+}
+
+/* Фон и текст ЛК */
+.account-page-bg {
+    background-color: #1a1a1a; /* тёмный фон страницы */
+    color: #fff; /* светлый текст */
+}
+
+/* Шапка ЛК */
+.account-header-bg {
+    background-color: #111; /* тёмная шапка */
+    border-bottom-color: #333;
+}
+
+/* При необходимости: ссылки в шапке ЛК */
+.account-page-bg a {
+    color: #fff;
 }

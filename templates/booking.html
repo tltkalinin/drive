@@ -12,12 +12,13 @@
             <!-- Дата и время -->
             <div class="row mb-3">
                 <div class="col">
-                    <label class="form-label">Дата</label>
-                    <input type="date" id="dateInput" name="date" class="form-control" required>
+                    <label class="auth-label">Дата</label>
+                    <input type="date" id="dateInput" name="date" class="auth-input" required
+                        style="background-color:#0a0a0f; color:#fff;">
                 </div>
                 <div class="col">
-                    <label class="form-label">Время начала</label>
-                    <select name="time" class="form-select" required>
+                    <label class="auth-label">Время начала</label>
+                    <select name="time" class="auth-input" required>
                         <option value="">Выберите время</option>
                         {% for h in range(0, 24) %}
                         {% set hour = "%02d:00" % h %}
@@ -29,8 +30,8 @@
 
             <!-- Длительность -->
             <div class="mb-3">
-                <label class="form-label">Длительность</label>
-                <select class="form-select" name="duration" required>
+                <label class="auth-label">Длительность</label>
+                <select class="auth-input" name="duration" required>
                     <option value="">Выберите</option>
                     <option value="1">1 час</option>
                     <option value="2">2 часа</option>
@@ -51,47 +52,51 @@
 
             <!-- Зона -->
             <div class="mb-3">
-                <label class="form-label">Игровая зона</label>
-                <select class="form-select" name="zone" id="zone" required>
+                <label class="auth-label">Игровая зона</label>
+                <select class="auth-input" name="zone" id="zone" required>
                     <option value="">Выберите</option>
-                    <option value="pc">PC</option>
-                    <option value="ps">PlayStation</option>
-                    <option value="xbox">X-box</option>
-                    <option value="vr">VR</option>
+                    {% for row in prices %}
+                    {% set zone_key = row['service'].split(' ')[0] | lower %}
+                    <option value="{{ zone_key }}" data-service="{{ row['service'] }}"
+                        data-price1h="{{ row['price_1h'] }}" data-price12h="{{ row['price_12h'] }}"
+                        data-pricenight="{{ row['price_night'] }}">
+                        {{ row['service'] }} — {{ row['price_1h'] }} ₽/час
+                    </option>
+                    {% endfor %}
                 </select>
             </div>
 
             <!-- Подзона -->
             <div class="mb-3">
-                <label class="form-label">Подзона</label>
-                <select class="form-select" name="subzone" id="subzone" required>
-                    <!-- варианты будут подставляться скриптом -->
+                <label class="auth-label">Подзона</label>
+                <select class="auth-input" name="subzone" id="subzone" required>
+                    <option value="">Выберите подзону</option>
                 </select>
             </div>
 
             <!-- Динамический выбор номера -->
             <div class="mb-3" id="placeWrapper" style="display: none;">
-                <label class="form-label" id="placeLabel"></label>
+                <label class="auth-label" id="placeLabel"></label>
                 <div id="placeGrid" class="d-flex flex-wrap gap-2 mt-2"></div>
                 <input type="hidden" name="place" id="placeSelect">
             </div>
 
             <!-- Сумма заказа -->
             <div class="mb-3" id="orderTotalWrapper" style="display:none;">
-                <label class="form-label fw-bold">Сумма заказа:</label>
+                <label class="auth-label fw-bold">Сумма заказа:</label>
                 <div id="orderTotal" class="p-2 border rounded bg-secondary text-light fs-5">0 ₽</div>
             </div>
 
             <!-- Комментарий -->
             <div class="mb-3">
-                <label class="form-label">Комментарий</label>
-                <textarea name="comment" class="form-control" rows="2" placeholder="Ваши пожелания..."></textarea>
+                <label class="auth-label">Комментарий</label>
+                <textarea name="comment" class="auth-input" rows="2" placeholder="Ваши пожелания..."></textarea>
             </div>
 
             <!-- Оплата -->
             <div class="mb-3">
-                <label class="form-label">Способ оплаты</label>
-                <select class="form-select" name="payment" id="payment" required>
+                <label class="auth-label">Способ оплаты</label>
+                <select class="auth-input" name="payment" id="payment" required>
                     <option value="">Выберите</option>
                     <option value="online">Онлайн</option>
                     <option value="club">В клубе</option>
@@ -99,19 +104,18 @@
             </div>
 
             <div class="text-center mt-2" id="payButtonWrapper" style="display:none;">
-                <button type="button" class="btn btn-success px-5 py-2" id="openPaymentBtn">Оплатить</button>
+                <button type="button" class="auth-btn" id="openPaymentBtn">Оплатить</button>
             </div>
             <div class="text-center mt-2" id="paidLabelWrapper" style="display:none;">
                 <div class="border p-2 text-success">Заказ оплачен</div>
             </div>
 
             <div class="text-center mt-4">
-                <button type="submit" class="btn my-button px-5 py-2">Забронировать</button>
+                <button type="submit" class="login-btn">Забронировать</button>
             </div>
         </form>
     </div>
 </div>
-
 
 <!-- Модальное окно подтверждения -->
 <div class="modal fade" id="confirmModal" tabindex="-1" aria-hidden="true">
@@ -140,5 +144,119 @@
     </div>
 </div>
 
-<script src="{{ url_for('static', filename='booking.js') }}"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const zoneSelect = document.getElementById('zone');
+        const subzoneSelect = document.getElementById('subzone');
+        const placeWrapper = document.getElementById('placeWrapper');
+        const placeLabel = document.getElementById('placeLabel');
+        const placeSelect = document.getElementById('placeSelect');
+        const durationSelect = document.querySelector('select[name="duration"]');
+        const orderTotalWrapper = document.getElementById('orderTotalWrapper');
+        const orderTotal = document.getElementById('orderTotal');
+
+        // --- Динамическое заполнение подзон ---
+        zoneSelect.addEventListener('change', () => {
+            subzoneSelect.innerHTML = "<option value=''>Выберите подзону</option>";
+            const selected = zoneSelect.selectedOptions[0];
+            if (!selected) return;
+
+            const serviceName = selected.getAttribute('data-service');
+            if (serviceName.includes('Общий зал')) {
+                subzoneSelect.append(new Option('Общий зал', 'common'));
+                subzoneSelect.append(new Option('Отдельная комната', 'room'));
+            } else if (serviceName.includes('VR')) {
+                subzoneSelect.append(new Option('VR-станция', 'vrstation'));
+            }
+
+            updatePlaces();
+            updateOrderTotal();
+        });
+
+        // --- Генерация номеров/мест ---
+        subzoneSelect.addEventListener('change', () => {
+            updatePlaces();
+            updateOrderTotal();
+        });
+
+        function updatePlaces() {
+            placeWrapper.style.display = 'none';
+            placeLabel.textContent = '';
+            const zone = zoneSelect.value;
+            const subzone = subzoneSelect.value;
+            if (!zone || !subzone) return;
+
+            let count = 0, label = '';
+            if (zone === 'pc' && subzone === 'common') { count = 24; label = 'Номер стола PC'; }
+            if (zone === 'pc' && subzone === 'room') { count = 6; label = 'Номер комнаты PC'; }
+            if (zone === 'ps' && subzone === 'common') { count = 8; label = 'Номер стола PlayStation'; }
+            if (zone === 'ps' && subzone === 'room') { count = 6; label = 'Номер комнаты PlayStation'; }
+            if (zone === 'xbox' && subzone === 'common') { count = 8; label = 'Номер стола X-box'; }
+            if (zone === 'xbox' && subzone === 'room') { count = 6; label = 'Номер комнаты X-box'; }
+            if (zone === 'vr' && subzone === 'vrstation') { count = 7; label = 'Номер VR-станции'; }
+
+            if (count > 0) {
+                placeLabel.textContent = label;
+                placeWrapper.style.display = 'block';
+                placeSelect.value = '';
+                const placeGrid = document.getElementById('placeGrid');
+                placeGrid.innerHTML = '';
+                const selectedPlaces = new Set();
+                for (let i = 1; i <= count; i++) {
+                    const btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.className = 'btn btn-outline-light btn-sm';
+                    btn.textContent = i;
+                    btn.addEventListener('click', () => {
+                        if (selectedPlaces.has(i)) { selectedPlaces.delete(i); btn.classList.remove('active'); }
+                        else { selectedPlaces.add(i); btn.classList.add('active'); }
+                        placeSelect.value = Array.from(selectedPlaces).sort((a, b) => a - b).join(',');
+                        updateOrderTotal();
+                    });
+                    placeGrid.appendChild(btn);
+                }
+            }
+        }
+
+        // --- Расчёт суммы ---
+        function updateOrderTotal() {
+            const zoneOption = zoneSelect.selectedOptions[0];
+            const subzone = subzoneSelect.value;
+            const duration = durationSelect.value;
+            if (!zoneOption || !subzone || !duration) { orderTotalWrapper.style.display = 'none'; return; }
+
+            const selectedPlaces = placeSelect.value ? placeSelect.value.split(',') : [];
+            const count = selectedPlaces.length || 1;
+
+            let price = 0;
+            const price1h = parseInt(zoneOption.getAttribute('data-price1h') || 0);
+            const price12h = parseInt(zoneOption.getAttribute('data-price12h') || 0);
+            const pricenight = parseInt(zoneOption.getAttribute('data-pricenight') || 0);
+
+            if (duration === 'night') price = pricenight;
+            else if (duration === '12h') price = price12h;
+            else if (duration === '24h') price = price12h * 2; // можно настроить
+            else price = price1h * Number(duration);
+
+            price *= count;
+
+            if (price > 0) {
+                orderTotal.textContent = price + ' ₽';
+                orderTotalWrapper.style.display = 'block';
+            } else orderTotalWrapper.style.display = 'none';
+        }
+
+        durationSelect.addEventListener('change', updateOrderTotal);
+
+        // --- Минимальная дата ---
+        const dateInput = document.getElementById('dateInput');
+        if (dateInput) {
+            const today = new Date();
+            const yyyy = today.getFullYear();
+            const mm = String(today.getMonth() + 1).padStart(2, '0');
+            const dd = String(today.getDate()).padStart(2, '0');
+            dateInput.setAttribute('min', `${yyyy}-${mm}-${dd}`);
+        }
+    });
+</script>
 {% endblock %}
