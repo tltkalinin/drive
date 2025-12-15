@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  <title>
+    {% block title %}
+
+    {% endblock %}
+  </title>
+</head>
+
+<body class="{% if is_account_page %}account-page-bg{% endif %}">
+  <!-- Основной экран / шапка -->
+  <div class="main__screen">
+    <div class="flex">
+      <!-- Логотип -->
+      <div class="header__logo">
+        <a href="{{ url_for('index') }}" class="logo-link"></a>
+        <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo" />
+      </div>
+
+      <!-- Меню и кнопки -->
+      <header class="header">
+        <div class="header__menu">
+          <ul>
+            {% if not is_account_page %}
+            <li>
+              <a href="#zones">Игровые зоны</a>
+            </li>
+            <li>
+              <a href="#price">Прайс-лист</a>
+            </li>
+            <li>
+              <a href="#promo">Акции</a>
+            </li>
+            <li>
+              <a href="#about">О нас</a>
+            </li>
+            <li>
+              <a href="#games">Список игр</a>
+            </li>
+            {% endif %}
+          </ul>
+        </div>
+
+        <div id="headerButtonBox" class="header__button button">
+          {% if session.get('user_id') %}
+          {% if is_account_page %}
+          <div class="flex ac">
+            <form action="{{ url_for('index') }}" method="get" style="display: inline;">
+              <button id="mainBtn">На главную</button>
+            </form>
+            <form action="{{ url_for('logout') }}" method="get" style="display: inline;">
+              <button id="logoutBtn1">Выйти</button>
+            </form>
+          </div>
+          {% else %}
+          {% if session.get('is_admin') %}
+          <form action="{{ url_for('admin_panel') }}" method="get" style="display: inline;">
+            <button id="adminPanelBtn">Админка</button>
+          </form>
+          <form action="{{ url_for('logout') }}" method="get" style="display: inline;">
+            <button id="logoutBtn">Выйти</button>
+          </form>
+          {% else %}
+          <div class="flex two_btn">
+            <form action="{{ url_for('account') }}" method="get" style="display: inline;">
+              <button id="login-btn"><img src="{{ url_for('static', filename='img/man.png') }}" alt="" /></button>
+            </form>
+
+            <form action="{{ url_for('logout') }}" method="get" style="display: inline;">
+              <button id="logoutBtn">Выйти</button>
+            </form>
+          </div>
+          {% endif %}
+          {% endif %}
+          {% else %}
+          <form action="{{ url_for('auth', next='/account') }}" method="get" style="display: inline;">
+            <button>
+              <img src="{{ url_for('static', filename='img/icon-user.svg') }}" alt="" />
+              Войти
+            </button>
+          </form>
+          {% endif %}
+        </div>
+      </header>
+    </div>
+
+    {% block body %}
+
+    {% endblock %}
+  </div>
+
+  <script src="{{ url_for('static', filename='js/booking.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+
+  {% if is_account_page %}
+  <script src="{{ url_for('static', filename='js/account.js') }}"></script>
+  {% endif %}
+</body>
+
+</html>

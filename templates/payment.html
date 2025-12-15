@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Оплата заказа</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-dark text-light p-4">
+
+<h3 class="mb-4">Оплата заказа</h3>
+
+<form id="paymentForm" novalidate>
+    <div class="mb-3">
+        <label class="form-label">Номер карты</label>
+        <input type="text" id="cardNumber" class="form-control" placeholder="0000 0000 0000 0000" required>
+        <div class="invalid-feedback text-danger"></div>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Срок действия</label>
+        <input type="text" id="expiry" class="form-control" placeholder="MM/YY" required>
+        <div class="invalid-feedback text-danger"></div>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">CVC</label>
+        <input type="text" id="cvc" class="form-control" placeholder="123" required>
+        <div class="invalid-feedback text-danger"></div>
+    </div>
+    <div class="text-center mt-4">
+        <button type="submit" class="btn btn-success px-5">Оплатить</button>
+    </div>
+</form>
+
+<div id="paidMessage" class="text-center mt-3" style="display:none;">
+    <h4 class="text-success">Заказ оплачен</h4>
+
+    <button type="button" id="bookBtn" class="btn btn-primary mt-3 px-4">
+        Забронировать
+    </button>
+
+    <div id="bookingSuccess" class="mt-4" style="display:none;">
+        <h3 class="text-success fw-bold">Бронирование успешно!</h3>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/payment.js') }}"></script>
+</body>
+</html>

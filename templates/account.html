@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+
+{% block title %}Личный кабинет - DRIVE{% endblock %}
+
+{% block body %}
+<div class="account-page-bg">
+    <div class="account-container">
+        <h2 class="account-title">Личный кабинет</h2>
+
+        <form method="POST" action="{{ url_for('update_account') }}" class="account-form">
+            <div class="account-info">
+                <label>Имя:</label>
+                <div id="nameDiv">{{ user.name or 'не указано' }}</div>
+                <input type="text" name="name" id="nameInput" value="{{ user.name or '' }}" class="hidden">
+            </div>
+            <div class="account-info">
+                <label>Эл. почта:</label>
+                <div>{{ user.username }}</div>
+            </div>
+            <div class="account-info">
+                <label>Телефон:</label>
+                <div id="phoneDiv">{{ user.phone or 'не указан' }}</div>
+                <input type="text" name="phone" id="phoneInput" value="{{ user.phone or '' }}" class="hidden">
+            </div>
+            <div class="account-info">
+                <label>Скидка:</label>
+                <div>{{ discount or 0 }}%</div>
+                <h2 class="discount-note">скидка рассчитывается только с оплаченных заказов<br>
+                    применить скидку можно только при оплате в клубе<br>
+                    максимальная скидка 30%
+                </h2>
+            </div>
+            <button type="button" id="editBtn" class="account-btn">Редактировать</button>
+            <button type="submit" id="saveBtn" class="account-btn" class="hidden">Сохранить</button>
+        </form>
+
+        <div class="orders-section">
+            <h4 class="orders-title">История заказов</h4>
+            {% if orders %}
+            <span class="orders-toggle">Показать / Скрыть заказы</span>
+            <div id="ordersList" class="hidden">
+                {% for order in orders %}
+                <div class="order-item">
+                    <p>
+                        <strong>Дата:</strong> {{ order.date }}
+                        &nbsp;&nbsp; <strong>Время начала:</strong> {{ order.time }}
+                        &nbsp;&nbsp; <strong>Длительность:</strong> {{ order.duration }}{% if order.duration in
+                        ['1','2','3','4','5','6','12h'] %} ч{% endif %}
+                    </p>
+
+                    <p>
+                        <strong>Автопродление:</strong>
+                        {% if order.comment and 'autoprolong=1' in order.comment %}
+                        включено
+                        {% else %}
+                        выключено
+                        {% endif %}
+                    </p>
+
+                    <p>
+                        <strong>Зона:</strong>
+                        {% if order.zone == 'pc' %}
+                        ПК
+                        {% elif order.zone == 'ps' %}
+                        PlayStation
+                        {% elif order.zone == 'xbox' %}
+                        X-box
+                        {% elif order.zone == 'vr' %}
+                        VR
+                        {% else %}
+                        {{ order.zone or '—' }}
+                        {% endif %}
+
+                        &nbsp;&nbsp; <strong>Подзона:</strong>
+                        {% if order.subzone == 'common' %}
+                        Общий зал
+                        {% elif order.subzone == 'vip' %}
+                        VIP
+                        {% elif order.subzone == 'vrstation' %}
+                        VR-станция
+                        {% else %}
+                        {{ order.subzone or '—' }}
+                        {% endif %}
+                    </p>
+
+
+                    <p>
+                        <strong>Номер(а) мест:</strong> {{ order.places or '—' }}
+                    </p>
+
+                    <p>
+                        <strong>Сумма заказа:</strong> {{ order.total }} ₽
+                    </p>
+
+                    <p>
+                        <strong>Способ оплаты:</strong>
+                        {% if order.payment == 'online' %}Онлайн{% elif order.payment == 'club' %}В клубе{% else %}не
+                        указан{% endif %}
+                    </p>
+
+                    <p>
+                        <strong>Оплата заказа:</strong>
+                        {% if order.status == 'paid' %}
+                        Оплачен
+                        {% elif order.payment == 'online' %}
+                        Не оплачен (оплата онлайн)
+                        {% else %}
+                        Не оплачен
+                        {% endif %}
+                    </p>
+
+
+                    <p>
+                        <strong>Комментарий:</strong> {{ order.comment or '—' }}
+                    </p>
+                </div>
+                {% endfor %}
+
+            </div>
+            {% else %}
+            <p class="order-empty">История заказов пока пуста.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/account.js') }}"></script>
+{% endblock %}

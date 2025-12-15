@@ -1,0 +1,356 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Бронирование
+{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+  <!-- Основной экран -->
+  <div class="main__screen">
+    <!-- Кнопка прокрутки вверх -->
+    <button id="scrollTopBtn" title="Наверх" style="display:none;"><img
+        src="{{ url_for('static', filename='img/Vector.png') }}" alt="Наверх" /></button>
+
+    <div class="central__image">
+      <img src="{{ url_for('static', filename='img/drive.png') }}" alt="" />
+    </div>
+
+    <div class="flex">
+      <div class="icons icons_left">
+        <div class="icn">
+          <img src="{{ url_for('static', filename='img/solid_computer.png') }}" alt="" />
+          <h1>Самое мощное оборудование</h1>
+        </div>
+        <div class="icn">
+          <img src="{{ url_for('static', filename='img/solid_clock-rotate-left.png') }}" alt="" />
+          <h1>Работаем<br />24/7</h1>
+        </div>
+      </div>
+
+      {% if session.get('user_id') %}
+      {# уже вошли — идём сразу на бронирование #}
+      <form action="{{ url_for('booking') }}" method="get">
+        <button class="reserve">Забронировать</button>
+      </form>
+      {% else %}
+      {# не вошли — сначала авторизация, потом /booking #}
+      <form action="{{ url_for('auth') }}" method="get">
+        <input type="hidden" name="next" value="/booking" />
+        <button class="reserve">Забронировать</button>
+      </form>
+      {% endif %}
+
+
+      <div class="icons icons_right">
+        <div class="icn">
+          <img src="{{ url_for('static', filename='img/solid_wifi.png') }}" alt="" />
+          <h1>Бесплатный WiFi</h1>
+        </div>
+        <div class="icn">
+          <img src="{{ url_for('static', filename='img/solid_vr-cardboard.png') }}" alt="" />
+          <h1>Игровые ПК, PS, X-Box, VR</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Игровые зоны -->
+  <div class="screen" id="zones">
+    <div class="title">
+      <h1>Игровые зоны</h1>
+    </div>
+
+    <div class="cards carousel-1">
+      <button class="arrow arrow__left"><img src="{{ url_for('static', filename='img/chevron-left.svg') }}" width="30"
+          height="48" alt="Назад" /></button>
+      <div class="coverflow">
+        <div class="card">
+          <img src="{{ url_for('static', filename='img/area-photo-4.png') }}" alt="" />
+        </div>
+        <div class="card">
+          <img src="{{ url_for('static', filename='img/area-photo-2.png') }}" alt="" />
+        </div>
+        <div class="card">
+          <img src="{{ url_for('static', filename='img/area-photo-1.png') }}" alt="" />
+        </div>
+        <div class="card">
+          <img src="{{ url_for('static', filename='img/about-photo.png') }}" alt="" />
+        </div>
+        <div class="card">
+          <img src="{{ url_for('static', filename='img/area-photo-3.png') }}" alt="" />
+        </div>
+      </div>
+      <button class="arrow arrow__right"><img src="{{ url_for('static', filename='img/chevron-right.svg') }}" width="30"
+          height="48" alt="Вперёд" /></button>
+    </div>
+  </div>
+
+  <!-- Прайс-лист -->
+  <div class="screen" id="price">
+    <div class="title">
+      <h1>Прайс-лист</h1>
+    </div>
+    <div class="tv">
+      <img src="{{ url_for('static', filename='img/tv.png') }}" alt="" />
+      <div class="tv__table-viewport">
+        <div class="tv__table-scroll">
+          <!-- Верхний отступ -->
+          <div class="tv__spacer"></div>
+          <div class="card_title">ПК</div>
+          <div class="tv__card">
+            <table class="tv_table">
+              <thead>
+                <tr>
+                  <th>Тариф</th>
+                  <th>OpenSpace</th>
+                  <th>VIP</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Почасовой</td>
+                  <td>{{ tariffs['pc']['common']['1h'] }}</td>
+                  <td>{{ tariffs['pc']['vip']['1h'] }}</td>
+                </tr>
+                <tr>
+                  <td>Абонемент 12ч</td>
+                  <td>{{ tariffs['pc']['common']['12h'] }}</td>
+                  <td>{{ tariffs['pc']['vip']['12h'] }}</td>
+                </tr>
+                <tr>
+                  <td>Ночь 22-10</td>
+                  <td>{{ tariffs['pc']['common']['night'] }}</td>
+                  <td>{{ tariffs['pc']['vip']['night'] }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="card_title">PlayStation 5</div>
+          <div class="tv__card">
+            <table class="tv_table">
+              <thead>
+                <tr>
+                  <th>Тариф</th>
+                  <th>OpenSpace</th>
+                  <th>VIP</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Почасовой</td>
+                  <td>{{ tariffs['ps']['common']['1h'] }}</td>
+                  <td>{{ tariffs['ps']['vip']['1h'] }}</td>
+                </tr>
+                <tr>
+                  <td>Абонемент 12ч</td>
+                  <td>{{ tariffs['ps']['common']['12h'] }}</td>
+                  <td>{{ tariffs['ps']['vip']['12h'] }}</td>
+                </tr>
+                <tr>
+                  <td>Ночь 22-10</td>
+                  <td>{{ tariffs['ps']['common']['night'] }}</td>
+                  <td>{{ tariffs['ps']['vip']['night'] }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="card_title">X-Box</div>
+          <div class="tv__card">
+            <table class="tv_table">
+              <thead>
+                <tr>
+                  <th>Тариф</th>
+                  <th>OpenSpace</th>
+                  <th>VIP</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Почасовой</td>
+                  <td>{{ tariffs['xbox']['common']['1h'] }}</td>
+                  <td>{{ tariffs['xbox']['vip']['1h'] }}</td>
+                </tr>
+                <tr>
+                  <td>Абонемент 12ч</td>
+                  <td>{{ tariffs['xbox']['common']['12h'] }}</td>
+                  <td>{{ tariffs['xbox']['vip']['12h'] }}</td>
+                </tr>
+                <tr>
+                  <td>Ночь 22-10</td>
+                  <td>{{ tariffs['xbox']['common']['night'] }}</td>
+                  <td>{{ tariffs['xbox']['vip']['night'] }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="card_title">VR</div>
+          <div class="tv__card">
+            <table class="tv_table">
+              <thead>
+                <tr>
+                  <th>Тариф</th>
+                  <th>VR-станция</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Почасовой</td>
+                  <td>{{ tariffs['vr']['vrstation']['1h'] }}</td>
+                </tr>
+                <tr>
+                  <td>Абонемент 12ч</td>
+                  <td>{{ tariffs['vr']['vrstation']['12h'] }}</td>
+                </tr>
+                <tr>
+                  <td>Ночь 22-10</td>
+                  <td>{{ tariffs['vr']['vrstation']['night'] }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Нижний отступ -->
+          <div class="tv__spacer"></div>
+        </div>
+
+        <div class="tv__arrow__wrap tv__arrow__wrap--up">
+          <img src="{{ url_for('static', filename='img/Up.png') }}" alt="Вверх" />
+        </div>
+        <div class="tv__arrow__wrap tv__arrow__wrap--down">
+          <img src="{{ url_for('static', filename='img/Down.png') }}" alt="Вниз" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Акции -->
+  <div class="screen" id="promo">
+    <div class="title">
+      <h1>Акции</h1>
+    </div>
+
+    <div class="flex promo">
+      <div class="section1 big">
+        <img src="{{ url_for('static', filename='img/Frame1.png') }}" alt="" />
+      </div>
+      <div class="section2 small">
+        <img src="{{ url_for('static', filename='img/Frame2.png') }}" alt="" />
+      </div>
+    </div>
+
+    <div class="flex promo">
+      <div class="section3 small">
+        <img src="{{ url_for('static', filename='img/Frame3.png') }}" alt="" />
+      </div>
+      <div class="section4 big">
+        <img src="{{ url_for('static', filename='img/Frame4.png') }}" alt="" />
+      </div>
+    </div>
+  </div>
+
+  <!-- О нас -->
+  <div class="screen" id="about">
+    <div class="title">
+      <h1>О нас</h1>
+    </div>
+
+    <div class="about">
+      <img src="{{ url_for('static', filename='img/about.png') }}" alt="" />
+      <form action="{{ url_for('auth') }}" method="get">
+        <input type="hidden" name="next" value="/booking" />
+        <button class="reserve">Запись онлайн</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Список игр -->
+  <div class="screen" id="games">
+    <div class="title">
+      <h1>Список игр</h1>
+    </div>
+
+    <div class="cards carousel-2">
+      <button class="arrow arrow__left"><img src="{{ url_for('static', filename='img/chevron-left.svg') }}" width="30"
+          height="48" alt="Назад" /></button>
+      <div class="coverflow">
+        <div class="card">
+          <img src="{{ url_for('static', filename='img/game-photo-4.png') }}" alt="" />
+        </div>
+        <div class="card">
+          <img src="{{ url_for('static', filename='img/game-photo-3.png') }}" alt="" />
+        </div>
+        <div class="card">
+          <img src="{{ url_for('static', filename='img/game-photo-2.png') }}" alt="" />
+        </div>
+        <div class="card">
+          <img src="{{ url_for('static', filename='img/game-photo-1.png') }}" alt="" />
+        </div>
+        <div class="card">
+          <img src="{{ url_for('static', filename='img/game-photo-0.png') }}" alt="" />
+        </div>
+      </div>
+      <button class="arrow arrow__right"><img src="{{ url_for('static', filename='img/chevron-right.svg') }}" width="30"
+          height="48" alt="Вперёд" /></button>
+    </div>
+  </div>
+
+  <!-- Подвал -->
+  <div class="footer_screen">
+    <div class="flex">
+      <div class="footer__logo">
+        <img src="{{ url_for('static', filename='img/logo.png') }}" alt="" />
+      </div>
+
+      <div class="site__map">
+        <div class="footer__title">
+          <h1>Карта сайта</h1>
+        </div>
+
+        <ul>
+          <li>
+            <a href="#about">О нас</a>
+          </li>
+          <li>
+            <a href="#zones">Игровые зоны</a>
+          </li>
+          <li>
+            <a href="#price">Прайс-лист</a>
+          </li>
+          <li>
+            <a href="#promo">Акции</a>
+          </li>
+          <li>
+            <a href="#games">Список игр</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="contact__info">
+        <div class="footer__title">
+          <h1>Контактная информация</h1>
+          <h2><span class="label">Телефон</span>:+7 (812) 407-15-868</h2>
+          <h2><span class="label">Email</span>: support@drive-spb.ru</h2>
+          <h2><span class="label">Адрес</span>: Невский проспект, д. 145А</h2>
+        </div>
+      </div>
+
+      <div class="phone">
+        <a href="https://wa.me/79024124772" target="_blank"><img
+            src="{{ url_for('static', filename='img/social-whatsapp-solid.png') }}" alt="WhatsApp" /></a>
+      </div>
+
+      <div class="tg">
+        <a href="https://t.me/i_why_yes" target="_blank"><img
+            src="{{ url_for('static', filename='img/telegram-duotone.png') }}" alt="Telegram" /></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="caption">
+    <h1>© 2025 Educational project by Igor Kalinin | Design by Katalina</h1>
+  </div>
+</div>
+{% endblock %}

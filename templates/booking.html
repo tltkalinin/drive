@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Бронирование
+{% endblock %}
+
+{% block body %}
+<div class="booking-container">
+  <h2 class="booking-title">Форма бронирования</h2>
+  <form id="bookingForm" class="booking-form" method="POST">
+    <!-- Дата и время на одной строке -->
+    <div class="flex">
+      <label for="dateInput">Дата</label>
+      <input type="date" id="dateInput" name="date" required style="background-color: #0a0a0f; color: #fff;" />
+
+      <label for="time">Время начала</label>
+      <select name="time" id="time" required>
+        <option value="">Выберите время</option>
+        {% for h in range(0, 24) %}
+        {% set hour = '%02d:00' % h %}
+        <option value="{{ hour }}">{{ hour }}</option>
+        {% endfor %}
+      </select>
+
+      <label for="durationSelect">Длительность</label>
+      <select name="duration" id="durationSelect" required>
+        <option value="">Выберите</option>
+        <option value="1">1 час</option>
+        <option value="2">2 часа</option>
+        <option value="3">3 часа</option>
+        <option value="4">4 часа</option>
+        <option value="5">5 часов</option>
+        <option value="6">6 часов</option>
+        <option value="night">Ночной пакет (22:00–10:00)</option>
+        <option value="12h">12 часов</option>
+      </select>
+    </div>
+    <div class="form-check">
+      <input type="checkbox" name="auto_extend" id="auto_extend" class="form-check-input" />
+      <label for="auto_extend" class="form-check-label">Автопродление (до 12ч)</label>
+    </div>
+
+    <label for="zone">Игровая зона</label>
+    <select name="zone" id="zone" required>
+      <option value="">Выберите</option>
+      <option value="pc">ПК</option>
+      <option value="ps">Playstation</option>
+      <option value="xbox">X-box</option>
+      <option value="vr">VR</option>
+    </select>
+
+    <label for="subzone">Подзона</label>
+    <select name="subzone" id="subzone" required>
+      <option value="">Выберите подзону</option>
+    </select>
+
+    <!-- Места: динамически показывается -->
+    <div id="placeWrapper" style="display:none;">
+      <label id="placeLabel" class="place-label"></label>
+      <div id="placeGrid"></div>
+      <input type="hidden" name="place" id="placeSelect" />
+    </div>
+
+    <!-- Сумма заказа -->
+    <div id="orderTotalWrapper" class="order-total-wrapper">
+      <span class="order-total-title">Сумма заказа:</span>
+      <div id="orderTotal" class="order-total">0 ₽</div>
+    </div>
+
+    <label for="comment">Комментарий</label>
+    <textarea name="comment" id="comment" rows="2" placeholder="Ваши пожелания..."></textarea>
+
+    <label for="payment">Способ оплаты</label>
+    <select name="payment" id="payment" required>
+      <option value="">Выберите</option>
+      <option value="online">Онлайн</option>
+      <option value="club">В клубе</option>
+    </select>
+
+
+    <button type="submit" class="btn-submit">
+      Забронировать
+    </button>
+
+  </form>
+</div>
+
+<script>
+  window.tariffsFromDB = JSON.parse('{{ tariffs | tojson | safe }}');
+</script>
+<script src="{{ url_for('static', filename='js/booking.js') }}"></script>
+{% endblock %}

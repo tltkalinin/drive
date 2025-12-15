@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+
+{% block title %}Админка - DRIVE{% endblock %}
+
+{% block body %}
+<div class="admin-tariff-table-wrapper">
+    <h2 class="admin-tariff-table-title">Панель администратора</h2>
+
+    <h4 class="admin-tariff-table-subtitle">Редактирование тарифов</h4>
+    <form method="POST">
+        <table class="admin-tariff-table">
+            <thead>
+                <tr>
+                    <th>Зона</th>
+                    <th>Подзона</th>
+                    <th>Длительность</th>
+                    <th>Цена (₽)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for t in tariffs %}
+                <tr>
+                    <td>
+                        {% if t.zone == 'pc' %}
+                        ПК
+                        {% elif t.zone == 'ps' %}
+                        PlayStation
+                        {% elif t.zone == 'xbox' %}
+                        X-box
+                        {% elif t.zone == 'vr' %}
+                        VR
+                        {% else %}
+                        {{ t.zone }}
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if t.subzone == 'common' %}
+                        Общий зал
+                        {% elif t.subzone == 'vip' %}
+                        VIP
+                        {% elif t.subzone == 'vrstation' %}
+                        VR-станция
+                        {% else %}
+                        {{ t.subzone }}
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if t.duration == 'night' %}
+                        Ночной пакет (22:00–10:00)
+                        {% elif t.duration == '12h' %}
+                        12 часов
+                        {% elif t.duration == '1h' or t.duration == '1' %}
+                        1 час
+                        {% else %}
+                        {{ t.duration }}
+                        {% endif %}
+                    </td>
+                    <td>
+                        <input type="number" name="price_{{ t.id }}" value="{{ t.price }}">
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+
+        </table>
+        <button type="submit" class="admin-tariff-table-btn">Сохранить изменения</button>
+
+
+        <h4 class="admin-tariff-table-subtitle">Пользователи</h4>
+        <table class="admin-tariff-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Имя</th>
+                    <th>Почта</th>
+                    <th>Телефон</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for u in users %}
+                <tr>
+                    <td>{{ u.id }}</td>
+                    <td>{{ u.name or '—' }}</td>
+                    <td>{{ u.username }}</td>
+                    <td>{{ u.phone or '—' }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h4 class="admin-tariff-table-subtitle">Заказы</h4>
+        <table class="admin-tariff-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>User-ID</th>
+                    <th>Username</th>
+                    <th>Дата</th>
+                    <th>Время</th>
+                    <th>Зона</th>
+                    <th>Подзона</th>
+                    <th>Места</th>
+                    <th>Сумма (₽)</th>
+                    <th>Статус</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for o in orders %}
+                <tr>
+                    <td>{{ o.id }}</td>
+                    <td>{{ o.user_id }}</td>
+                    <td>{{ o.user_name or ('ID ' ~ o.user_id) }}</td>
+                    <td>{{ o.date }}</td>
+                    <td>{{ o.time }}</td>
+                    <td>
+                        {% if o.zone == 'pc' %}ПК
+                        {% elif o.zone == 'ps' %}PlayStation
+                        {% elif o.zone == 'xbox' %}X-box
+                        {% elif o.zone == 'vr' %}VR
+                        {% else %}{{ o.zone }}{% endif %}
+                    </td>
+                    <td>
+                        {% if o.subzone == 'common' %}Общий зал
+                        {% elif o.subzone == 'vip' %}VIP
+                        {% elif o.subzone == 'vrstation' %}VR-станция
+                        {% else %}{{ o.subzone }}{% endif %}
+                    </td>
+                    <td>{{ o.places or '—' }}</td>
+                    <td>{{ o.total }}</td>
+                    <td>
+                        {% if o.status == 'paid' %}Оплачен{% else %}Не оплачен{% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </form>
+</div>
+{% endblock %}
