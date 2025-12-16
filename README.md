@@ -34,7 +34,6 @@ python app.py
 
 ## Скриншоты
 
-![Главная страница](screenshots/mainscreen.png")
 ![Полный экран](screenshots/fullscreen.png)
 ![Панель администратора](screenshots/admin_panel.png)
 ![Форма бронирования](screenshots/booking.png)
