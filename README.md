@@ -1,7 +1,7 @@
 # DRIVE — система онлайн-бронирования компьютерного клуба
 
-Веб-приложение на Flask для записи клиентов в компьютерный клуб:
-выбор зоны (PC, PlayStation, Xbox, VR), времени и длительности сеанса, конкретных мест, способа оплаты и просмотр истории заказов.
+Веб-приложение на Flask для записи клиентов в компьютерный клуб:  выбор зоны (PC, PlayStation, Xbox, VR),  
+времени и длительности сеанса, конкретных мест, способа оплаты и просмотр истории заказов.
 
 
 ## Основные возможности
@@ -15,20 +15,20 @@
 
 ## Технологии
 
-- Backend: Python, Flask, Jinja2.
-- Frontend: HTML, CSS, JavaScript.
-- База данных: SQLite
+- Backend: Python, Flask, Jinja2.  
+- Frontend: HTML, CSS, JavaScript.  
+- База данных: SQLite  
 
 
 ## Как запустить локально
 
-git clone https://github.com/username/drive-club.git
-cd ./drive
-python -m venv venv
-source venv/bin/activate # Windows: venv\Scripts\activate
-pip install -r requirements.txt
-python initdb.py
-python app.py
+git clone https://github.com/username/drive-club.git  
+cd ./drive  
+python -m venv venv  
+source venv/bin/activate # Windows: venv\Scripts\activate  
+pip install -r requirements.txt  
+python initdb.py  
+python app.py  
 
 Приложение будет доступно по адресу `http://127.0.0.1:5001/`
 
@@ -42,5 +42,5 @@ python app.py
 ## Автор
 
 Учебный проект для автоматизации работы компьютерного клуба.  
-Разработка: Калинин Игорь
+Разработка: Калинин Игорь  
 Дизайн: Пожидаева Каталина
